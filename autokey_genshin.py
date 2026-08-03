@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 import threading
 import time
 import tkinter as tk
@@ -8,8 +9,17 @@ from tkinter import ttk
 from pynput import keyboard
 from pynput.keyboard import Key
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if getattr(sys, "frozen", False):
+    BASE_DIR = os.path.dirname(sys.executable)
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, "config.json")
+
+
+def resource_path(name):
+    if getattr(sys, "frozen", False):
+        return os.path.join(sys._MEIPASS, name)
+    return os.path.join(BASE_DIR, name)
 
 DEFAULTS = {
     "toggle_key": "alt+f",
@@ -76,6 +86,13 @@ class AutoKeyApp:
 
         self.build_ui()
         self.update_ui()
+
+        icon_path = resource_path("icon.ico")
+        if os.path.exists(icon_path):
+            try:
+                root.iconbitmap(icon_path)
+            except tk.TclError:
+                pass
 
         self.listener = keyboard.Listener(
             on_press=self.on_press,
