@@ -121,7 +121,7 @@ class AutoKeyApp:
         frm = ttk.Frame(self.root, padding=16)
         frm.grid()
 
-        ttk.Label(frm, text="Auto Key Presser (Genshin)",
+        ttk.Label(frm, text="Auto Key Presser",
                   font=("Segoe UI", 14, "bold")).grid(row=0, column=0, columnspan=3, pady=(0, 14))
 
         ttk.Label(frm, text="Tecla ativar/desativar:").grid(row=1, column=0, sticky="w")
